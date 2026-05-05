@@ -31,6 +31,9 @@ PanelWindow {
             property bool showDayLabel: true
             property bool showDigitalTime: true
             property bool showDateBadge: true
+            property bool showSecondHand: true
+            property bool showSecondHandLine: true
+            property bool usePywal: true
             property string accentColor: "#903B3B"
             property string bgColor: "#ecd1c7"
             property string primaryColor: "#090F1B"
@@ -42,7 +45,6 @@ PanelWindow {
             property real hand1Length: 60
             property real hand2Length: 100
             property real hand3Length: 120
-            property bool usePywal: true
         }
     }
 
@@ -67,6 +69,8 @@ PanelWindow {
     property bool showDayLabel: settings.showDayLabel
     property bool showDigitalTime: settings.showDigitalTime
     property bool showDateBadge: settings.showDateBadge
+    property bool showSecondHand: settings.showSecondHand
+    property bool showSecondHandLine: settings.showSecondHandLine
     property bool usePywal: settings.usePywal
     
     // Helper function to check if Pywal color exists
@@ -360,19 +364,39 @@ PanelWindow {
         }
 
         // Hand 3 (Second)
-        Rectangle {
-            id: secondHand
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: winSize * secondThickness
-            height: width + hand3Len
-            radius: width / 2
-            color: Qt.rgba(0,0,0,0.15)
-            y: winSize / 2 - height + width / 2
-            antialiasing: true
+        Item {
+            id: secondHandGroup
+            visible: showSecondHand
+            anchors.centerIn: parent
+            width: parent.width; height: parent.height
+            
             transform: Rotation {
-                origin.x: secondHand.width / 2
-                origin.y: secondHand.height - secondHand.width / 2
+                origin.x: winSize / 2
+                origin.y: winSize / 2
                 angle: currentTime.getSeconds() * 6
+            }
+
+            // The Line
+            Rectangle {
+                visible: showSecondHandLine
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: winSize * secondThickness
+                height: hand3Len
+                color: Qt.rgba(primaryColor.r, primaryColor.g, primaryColor.b, 0.15)
+                y: winSize / 2 - height
+                antialiasing: true
+            }
+
+            // The Dot (at the tip)
+            Rectangle {
+                visible: !showSecondHandLine
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: winSize * secondThickness * 2.5 // Make dot slightly larger for visibility
+                height: width
+                radius: width / 2
+                color: Qt.rgba(primaryColor.r, primaryColor.g, primaryColor.b, 0.25)
+                y: winSize / 2 - hand3Len - height / 2
+                antialiasing: true
             }
         }
 

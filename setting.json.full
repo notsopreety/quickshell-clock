@@ -1,6 +1,6 @@
 {
-    "winX": 100,
-    "winY": 100,
+    "winX": 10,
+    "winY": 40,
     "winSize": 220,
     "scallops": 12,
     "amplitude": 5,
@@ -9,6 +9,8 @@
     "showDayLabel": true,
     "showDigitalTime": true,
     "showDateBadge": true,
+    "showSecondHand": true,
+    "showSecondHandLine": true,
     "usePywal": true,
     "accentColor": "#903B3B",
     "bgColor": "#ecd1c7",
