@@ -382,6 +382,7 @@ PanelWindow {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: winSize * secondThickness
                 height: hand3Len
+                radius: width / 2
                 color: Qt.rgba(primaryColor.r, primaryColor.g, primaryColor.b, 0.15)
                 y: winSize / 2 - height
                 antialiasing: true
